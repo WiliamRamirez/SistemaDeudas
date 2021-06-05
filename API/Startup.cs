@@ -15,6 +15,7 @@ namespace API
     {
         public Startup(IConfiguration configuration)
         {
+            
             Configuration = configuration;
         }
 
@@ -34,15 +35,7 @@ namespace API
 
             services.AddMediatR(typeof(List.Handler).Assembly);
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("cors",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowCredentials()
-                            .AllowAnyHeader();
-                    });
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,8 +51,7 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors("cors");
+            
 
             app.UseAuthorization();
 
