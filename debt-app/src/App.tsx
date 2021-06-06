@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import { Customer } from './models/customer';
+import apiCustomers from './api/api.customers';
 
 function App() {
+    const [customers, setCustomers] = useState<Customer[]>([]);
+
+    useEffect(() => {
+        apiCustomers.list().then((data) => {
+            setCustomers(data);
+        });
+    }, []);
+
     return (
-        <div className='App'>
-            <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className='App-link'
-                    href='https://reactjs.org'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    Learn React
-                </a>
-            </header>
+        <div>
+            {customers.map((tempCustomer) => (
+                <div key={tempCustomer.id}>
+                    <p>
+                        {tempCustomer.name} - {tempCustomer.lastName}
+                    </p>
+                </div>
+            ))}
         </div>
     );
 }
