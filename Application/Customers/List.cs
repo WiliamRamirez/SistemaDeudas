@@ -13,7 +13,6 @@ namespace Application.Customers
     {
         public class Query : IRequest<List<Customer>>
         {
-            
         }
 
         public class Handler : IRequestHandler<Query, List<Customer>>
@@ -28,7 +27,7 @@ namespace Application.Customers
             public async Task<List<Customer>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var customers = await _context.Customers
-                    .Where(x => x.Delete != true)
+                    /*.Where(x => x.Delete != true)*/
                     .ToListAsync(cancellationToken);
 
                 return customers;
