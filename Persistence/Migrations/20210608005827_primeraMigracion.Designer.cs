@@ -10,8 +10,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210607173635_actulizarTablaClientes")]
-    partial class actulizarTablaClientes
+    [Migration("20210608005827_primeraMigracion")]
+    partial class primeraMigracion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,25 +27,16 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CellPhone")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Delete")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Direction")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ruc")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

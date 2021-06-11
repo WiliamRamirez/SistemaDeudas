@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Customers;
+using Application.DTOs.Customer;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,28 +22,28 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> Detail(Guid id)
+        public async Task<ActionResult<CustomerDto>> Detail(Guid id)
         {
             return await _mediator.Send(new Detail.Query {Id = id});
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Customer>>> GetCustomers()
+        public async Task<ActionResult<List<CustomerDto>>> GetCustomers()
         {
             return await _mediator.Send(new List.Query());
         }
 
         [HttpPost]
-        public async Task<ActionResult<Unit>> Add(Customer customer)
+        public async Task<ActionResult<Unit>> Add(AddCustomerDto addCustomerDto)
         {
-            return await _mediator.Send(new Add.Command {Customer = customer});
+            return await _mediator.Send(new Add.Command {AddCustomerDto = addCustomerDto});
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Unit>> Edit(Guid id, Customer customer)
+        public async Task<ActionResult<Unit>> Edit(Guid id, EditCustomerDto editCustomerDto)
         {
-            customer.Id = id;
-            return await _mediator.Send(new Edit.Command {Customer = customer});
+            editCustomerDto.Id = id;
+            return await _mediator.Send(new Edit.Command {EditCustomerDto = editCustomerDto});
         }
 
         [HttpPut("delete/{id}")]

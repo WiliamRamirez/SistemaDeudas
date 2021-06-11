@@ -22,8 +22,8 @@ import {
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import useStyles from '../dashboard/styles/use-styles';
 import { useTheme } from '@material-ui/core/styles';
+import useStyles from "./styles/use-styles";
 
 function ProfileSection() {
     const [open, setOpen] = React.useState(false);

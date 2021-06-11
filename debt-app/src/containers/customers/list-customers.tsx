@@ -72,8 +72,10 @@ function ListCustomers() {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Nro</TableCell>
-                                        <TableCell>Nombre</TableCell>
-                                        <TableCell>Apellidos</TableCell>
+                                        <TableCell>Cliente</TableCell>
+                                        <TableCell>Telefono</TableCell>
+                                        <TableCell>Email</TableCell>
+                                        <TableCell>Dni</TableCell>
                                         <TableCell>Estado</TableCell>
                                         {/*<TableCell align='right'>Sale Amount</TableCell>*/}
                                     </TableRow>
@@ -82,8 +84,12 @@ function ListCustomers() {
                                     {customers.map((tempCustomer, index) => (
                                         <TableRow key={tempCustomer.id}>
                                             <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{tempCustomer.name}</TableCell>
-                                            <TableCell>{tempCustomer.lastName}</TableCell>
+                                            <TableCell>
+                                                {tempCustomer.name} {tempCustomer.lastName}
+                                            </TableCell>
+                                            <TableCell> {tempCustomer.cellPhone}</TableCell>
+                                            <TableCell> {tempCustomer.email}</TableCell>
+                                            <TableCell> {tempCustomer.dni}</TableCell>
                                             <TableCell>
                                                 {tempCustomer.delete ? (
                                                     <Button

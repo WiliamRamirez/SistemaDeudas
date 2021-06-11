@@ -23,7 +23,12 @@ namespace Persistence
                     Delete = false,
                     Name = "UsuarioNombre1",
                     CreatedAt = DateTime.UtcNow.AddMonths(-2),
-                    LastName = "ApellidosUsuario1"
+                    LastName = "ApellidosUsuario1",
+                    Direction = "usuario1Direccion",
+                    Dni = "usuario1Dni",
+                    Email = "usuario1Email",
+                    CellPhone = "usuario1Telefono",
+                    UpdatedAt = DateTime.UtcNow.AddMonths(-2),
                 },
                 new Customer
                 {
@@ -31,7 +36,12 @@ namespace Persistence
                     Delete = true,
                     Name = "UsuarioNombre2",
                     CreatedAt = DateTime.UtcNow.AddMonths(2),
-                    LastName = "ApellidosUsuario2"
+                    LastName = "ApellidosUsuario2",
+                    Direction = "usuario2Direccion",
+                    Dni = "usuario2Dni",
+                    Email = "usuario2Email",
+                    CellPhone = "usuario2Telefono",
+                    UpdatedAt = DateTime.UtcNow.AddMonths(-2),
                 },
                 new Customer
                 {
@@ -39,7 +49,12 @@ namespace Persistence
                     Delete = false,
                     Name = "UsuarioNombre3",
                     CreatedAt = DateTime.UtcNow.AddMonths(-6),
-                    LastName = "ApellidosUsuario3"
+                    LastName = "ApellidosUsuario3",
+                    Direction = "usuario3Direccion",
+                    Dni = "usuario3Dni",
+                    Email = "usuario3Email",
+                    CellPhone = "usuario3Telefono",
+                    UpdatedAt = DateTime.UtcNow.AddMonths(-2),
                 },
                 new Customer
                 {
@@ -47,7 +62,12 @@ namespace Persistence
                     Delete = true,
                     Name = "UsuarioNombre4",
                     CreatedAt = DateTime.UtcNow.AddMonths(4),
-                    LastName = "ApellidosUsuario4"
+                    LastName = "ApellidosUsuario4",
+                    Direction = "usuario1Direccion",
+                    Dni = "usuario1Dni",
+                    Email = "usuario1Email",
+                    CellPhone = "usuario1Telefono",
+                    UpdatedAt = DateTime.UtcNow.AddMonths(-2),
                 },
                 new Customer
                 {
@@ -55,7 +75,12 @@ namespace Persistence
                     Delete = false,
                     Name = "UsuarioNombre5",
                     CreatedAt = DateTime.UtcNow.AddMonths(-5),
-                    LastName = "ApellidosUsuario5"
+                    LastName = "ApellidosUsuario5",
+                    Direction = "usuario1Direccion",
+                    Dni = "usuario1Dni",
+                    Email = "usuario1Email",
+                    CellPhone = "usuario1Telefono",
+                    UpdatedAt = DateTime.UtcNow.AddMonths(-2),
                 },
             };
 

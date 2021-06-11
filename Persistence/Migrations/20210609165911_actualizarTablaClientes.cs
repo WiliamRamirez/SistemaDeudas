@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class actulizarTablaClientes : Migration
+    public partial class actualizarTablaClientes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,10 +20,23 @@ namespace Persistence.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Ruc",
+                name: "Dni",
                 table: "Customers",
                 type: "nvarchar(max)",
                 nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Email",
+                table: "Customers",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "UpdatedAt",
+                table: "Customers",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -36,7 +50,15 @@ namespace Persistence.Migrations
                 table: "Customers");
 
             migrationBuilder.DropColumn(
-                name: "Ruc",
+                name: "Dni",
+                table: "Customers");
+
+            migrationBuilder.DropColumn(
+                name: "Email",
+                table: "Customers");
+
+            migrationBuilder.DropColumn(
+                name: "UpdatedAt",
                 table: "Customers");
         }
     }

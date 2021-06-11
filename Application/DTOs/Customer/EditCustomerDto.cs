@@ -1,8 +1,8 @@
 using System;
 
-namespace Domain
+namespace Application.DTOs.Customer
 {
-    public class Customer
+    public class EditCustomerDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -11,8 +11,5 @@ namespace Domain
         public string CellPhone { get; set; }
         public string Dni { get; set; }
         public string Email { get; set; }
-        public bool Delete { get; set; } = false;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }
