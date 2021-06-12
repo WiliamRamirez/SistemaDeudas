@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import useStyles from './styles/use-styles';
-import { Avatar, ButtonBase } from '@material-ui/core';
 import ProfileSection from '../profile-section/profile-section';
 
 interface Props {

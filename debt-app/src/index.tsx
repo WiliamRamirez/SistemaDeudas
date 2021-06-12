@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './containers/app/App';
 import reportWebVitals from './reportWebVitals';
-
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));

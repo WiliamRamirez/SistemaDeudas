@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Divider, Grid, Paper, TableContainer, Typography } from '@material-ui/core';
-import { Customer } from '../../models/customer';
-import apiCustomers from '../../api/api.customers';
-import Title from '../../components/dashboard/title';
+import { Customer } from '../../../models/customer';
+import apiCustomers from '../../../api/api.customers';
+import Title from '../../../components/dashboard/title';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
+import { Link } from 'react-router-dom';
 
-function ListCustomers() {
+function CustomersList() {
     const [customers, setCustomers] = useState<Customer[]>([]);
 
     useEffect(() => {
@@ -77,6 +78,7 @@ function ListCustomers() {
                                         <TableCell>Email</TableCell>
                                         <TableCell>Dni</TableCell>
                                         <TableCell>Estado</TableCell>
+                                        <TableCell>Editar</TableCell>
                                         {/*<TableCell align='right'>Sale Amount</TableCell>*/}
                                     </TableRow>
                                 </TableHead>
@@ -97,6 +99,11 @@ function ListCustomers() {
                                                         variant='contained'
                                                         color='primary'
                                                         style={{ width: '100px' }}
+                                                        startIcon={
+                                                            <span className='material-icons'>
+                                                                done
+                                                            </span>
+                                                        }
                                                     >
                                                         Activar
                                                     </Button>
@@ -106,10 +113,30 @@ function ListCustomers() {
                                                         variant='contained'
                                                         color='secondary'
                                                         style={{ width: '100px' }}
+                                                        startIcon={
+                                                            <span className='material-icons'>
+                                                                delete_outline
+                                                            </span>
+                                                        }
                                                     >
                                                         Eliminar
                                                     </Button>
                                                 )}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button
+                                                    component={Link}
+                                                    to={`/customers/edit/${tempCustomer.id}`}
+                                                    size={'small'}
+                                                    variant='contained'
+                                                    color='inherit'
+                                                    style={{ width: '100px' }}
+                                                    startIcon={
+                                                        <span className='material-icons'>edit</span>
+                                                    }
+                                                >
+                                                    Editar
+                                                </Button>
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -123,4 +150,4 @@ function ListCustomers() {
     );
 }
 
-export default ListCustomers;
+export default CustomersList;

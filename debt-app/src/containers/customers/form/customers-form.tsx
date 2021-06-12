@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
-import CustomBodyName from '../../components/body-custom/custom-body-name';
-import CustomBodyDescription from '../../components/body-custom/custom-body-description';
-import CustomBody from '../../components/body-custom/custom-body';
+import React, { useEffect, useState } from 'react';
+import CustomBodyName from '../../../components/body-custom/custom-body-name';
+import CustomBodyDescription from '../../../components/body-custom/custom-body-description';
+import CustomBody from '../../../components/body-custom/custom-body';
 import Grid from '@material-ui/core/Grid';
-import CustomTextField from '../../components/custom-text-field/custom-text-field';
+import CustomTextField from '../../../components/custom-text-field/custom-text-field';
 import { Button } from '@material-ui/core';
-import CustomMainForm from '../../components/form/custom-main-form';
-import { CustomerFormValues } from '../../models/customer';
-import apiCustomers from '../../api/api.customers';
+import CustomMainForm from '../../../components/form/custom-main-form';
+import { CustomerFormValues } from '../../../models/customer';
+import apiCustomers from '../../../api/api.customers';
+import { useParams } from 'react-router-dom';
 
-function AddCustomers() {
+function CustomersForm() {
     const [customer, setCustomer] = useState<CustomerFormValues>(new CustomerFormValues());
+
+    const { id } = useParams<{ id: string }>();
 
     function changeValueCustomer(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
         const { value, name } = event.target;
@@ -19,17 +22,28 @@ function AddCustomers() {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        if (id) {
+            apiCustomers.edit(customer);
+        }
         apiCustomers.add(customer);
     }
 
+    useEffect(() => {
+        if (id) {
+            apiCustomers.detail(id).then((data) => setCustomer(new CustomerFormValues(data)));
+        }
+    }, [id]);
+
     return (
         <React.Fragment>
-            <CustomBodyName>Agregar un nuevo cliente</CustomBodyName>
+            <CustomBodyName>{id ? 'Editar un cliente' : 'Agregar un nuevo cliente'}</CustomBodyName>
             <CustomBodyDescription>
-                Este componenete se encarga de agregar un nuevo cliente
+                {id
+                    ? 'Este componenete se encarga de editar un  cliente'
+                    : 'Este componenete se encarga de agregar un nuevo cliente'}
             </CustomBodyDescription>
             <CustomBody>
-                <CustomMainForm title={'Agregue un nuevo cliente'}>
+                <CustomMainForm title={id ? 'Edite su cliente' : 'Agregue un nuevo cliente'}>
                     <form onSubmit={handleSubmit}>
                         <React.Fragment>
                             <Grid container spacing={3}>
@@ -88,9 +102,20 @@ function AddCustomers() {
                                     />
                                 </Grid>
                             </Grid>
-                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button type={'submit'} variant='contained' color={'primary'}>
-                                    Agregar
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'flex-end',
+                                    marginTop: '15px',
+                                }}
+                            >
+                                <Button
+                                    type={'submit'}
+                                    variant='contained'
+                                    color={'primary'}
+                                    startIcon={<span className='material-icons'>send</span>}
+                                >
+                                    {id ? 'Editar' : 'Agregar'}
                                 </Button>
                             </div>
                         </React.Fragment>
@@ -101,4 +126,4 @@ function AddCustomers() {
     );
 }
 
-export default AddCustomers;
+export default CustomersForm;

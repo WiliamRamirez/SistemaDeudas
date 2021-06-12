@@ -1,7 +1,5 @@
 import React from 'react';
 import { Grid, Paper } from '@material-ui/core';
-import CustomMainForm from '../form/custom-main-form';
-import PaymentForm from '../form/payment-form';
 
 interface Props {
     children?: React.ReactNode;
