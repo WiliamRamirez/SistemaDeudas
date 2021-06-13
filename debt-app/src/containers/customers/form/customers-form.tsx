@@ -9,8 +9,15 @@ import CustomMainForm from '../../../components/form/custom-main-form';
 import { CustomerFormValues } from '../../../models/customer';
 import apiCustomers from '../../../api/api.customers';
 import { useParams } from 'react-router-dom';
+import CustomSnackbar from '../../../components/custom-snackbar/custom-snackbar';
+import BodyLoading from '../../../components/custom-loading/body-loading';
+import ButtonLoading from '../../../components/custom-loading/button-loading';
 
 function CustomersForm() {
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(true);
+    const [message, setMessage] = useState('');
     const [customer, setCustomer] = useState<CustomerFormValues>(new CustomerFormValues());
 
     const { id } = useParams<{ id: string }>();
@@ -23,19 +30,48 @@ function CustomersForm() {
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (id) {
-            apiCustomers.edit(customer);
+            setLoading(true);
+            apiCustomers.edit(customer).then(() => {
+                updatedLoading();
+            });
+            setMessage('Se edito correctamento el cliente');
+        } else {
+            setLoading(true);
+            apiCustomers.add(customer).then(() => {
+                updatedLoading();
+            });
+            setMessage('Se agrego correctamento el cliente');
         }
-        apiCustomers.add(customer);
+    }
+
+    function updatedLoading() {
+        setLoading(false);
+        setOpen(true);
     }
 
     useEffect(() => {
         if (id) {
-            apiCustomers.detail(id).then((data) => setCustomer(new CustomerFormValues(data)));
+            apiCustomers.detail(id).then((data) => {
+                setCustomer(new CustomerFormValues(data));
+                setInitialLoading(false);
+            });
+        } else {
+            setInitialLoading(false);
         }
     }, [id]);
 
-    return (
+    return initialLoading ? (
+        <BodyLoading />
+    ) : (
         <React.Fragment>
+            {
+                <CustomSnackbar
+                    open={open}
+                    severity={'success'}
+                    setOpen={setOpen}
+                    message={message}
+                />
+            }
             <CustomBodyName>{id ? 'Editar un cliente' : 'Agregar un nuevo cliente'}</CustomBodyName>
             <CustomBodyDescription>
                 {id
@@ -114,8 +150,10 @@ function CustomersForm() {
                                     variant='contained'
                                     color={'primary'}
                                     startIcon={<span className='material-icons'>send</span>}
+                                    disabled={loading}
                                 >
                                     {id ? 'Editar' : 'Agregar'}
+                                    {loading && <ButtonLoading />}
                                 </Button>
                             </div>
                         </React.Fragment>
