@@ -11,6 +11,7 @@ namespace Application.Customers
         public class Command : IRequest<Unit>
         {
             public Guid Id { get; set; }
+            public bool Delete { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Unit>
@@ -31,7 +32,7 @@ namespace Application.Customers
                     throw new Exception("No existe el customer");
                 }
 
-                customer.Delete = true;
+                customer.Delete = request.Delete;
                 var result = await _context.SaveChangesAsync();
 
                 if (result > 0)

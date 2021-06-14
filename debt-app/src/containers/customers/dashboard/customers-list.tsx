@@ -9,19 +9,52 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import { Link } from 'react-router-dom';
+import BodyLoading from '../../../components/custom-loading/body-loading';
+import ButtonLoading from '../../../components/custom-loading/button-loading';
 
 function CustomersList() {
+    const [initialLoading, setInitialLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [customers, setCustomers] = useState<Customer[]>([]);
+    const [target, setTarget] = useState('');
+
+    function changeRemove(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) {
+        const customer = customers.find((x) => x.id === id);
+        if (customer) {
+            //Remove
+            setTarget(event.currentTarget.name);
+            const value = !customer.delete;
+            setLoading(true);
+            apiCustomers.remove(id, value).then(() => {
+                setLoading(false);
+                setCustomers(
+                    customers.map((tempCustomer) =>
+                        tempCustomer.id === id ? { ...customer, delete: value } : tempCustomer
+                    )
+                );
+            });
+
+            //Delete
+            /*setTarget(event.currentTarget.name);
+            setLoading(true);
+            apiCustomers.delete(id).then(() => {
+                setLoading(false);
+                setCustomers(customers.filter((tempCustomer) => tempCustomer.id !== id));
+            });*/
+        }
+    }
 
     useEffect(() => {
         apiCustomers.list().then((data) => {
             setCustomers(data);
+            setInitialLoading(false);
         });
     }, []);
 
-    return (
+    return initialLoading ? (
+        <BodyLoading />
+    ) : (
         <React.Fragment>
-            {/* Chart */}
             <Grid item xs={12} md={8} lg={5}>
                 <Paper
                     style={{
@@ -79,7 +112,7 @@ function CustomersList() {
                                         <TableCell>Dni</TableCell>
                                         <TableCell>Estado</TableCell>
                                         <TableCell>Editar</TableCell>
-                                        {/*<TableCell align='right'>Sale Amount</TableCell>*/}
+                                        <TableCell>Detalles</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -93,35 +126,33 @@ function CustomersList() {
                                             <TableCell> {tempCustomer.email}</TableCell>
                                             <TableCell> {tempCustomer.dni}</TableCell>
                                             <TableCell>
-                                                {tempCustomer.delete ? (
-                                                    <Button
-                                                        size={'small'}
-                                                        variant='contained'
-                                                        color='primary'
-                                                        style={{ width: '100px' }}
-                                                        startIcon={
-                                                            <span className='material-icons'>
-                                                                done
-                                                            </span>
-                                                        }
-                                                    >
-                                                        Activar
-                                                    </Button>
-                                                ) : (
-                                                    <Button
-                                                        size={'small'}
-                                                        variant='contained'
-                                                        color='secondary'
-                                                        style={{ width: '100px' }}
-                                                        startIcon={
-                                                            <span className='material-icons'>
-                                                                delete_outline
-                                                            </span>
-                                                        }
-                                                    >
-                                                        Eliminar
-                                                    </Button>
-                                                )}
+                                                <Button
+                                                    name={tempCustomer.id}
+                                                    size={'small'}
+                                                    variant='contained'
+                                                    color={
+                                                        tempCustomer.delete
+                                                            ? 'primary'
+                                                            : 'secondary'
+                                                    }
+                                                    style={{ width: '100px' }}
+                                                    disabled={target === tempCustomer.id && loading}
+                                                    onClick={(event) =>
+                                                        changeRemove(event, tempCustomer.id)
+                                                    }
+                                                    startIcon={
+                                                        <span className='material-icons'>
+                                                            {tempCustomer.delete
+                                                                ? 'done'
+                                                                : 'delete_outline'}
+                                                        </span>
+                                                    }
+                                                >
+                                                    {tempCustomer.delete ? 'Activar' : 'Eliminar'}
+                                                    {target === tempCustomer.id && loading && (
+                                                        <ButtonLoading />
+                                                    )}
+                                                </Button>
                                             </TableCell>
                                             <TableCell>
                                                 <Button
@@ -136,6 +167,21 @@ function CustomersList() {
                                                     }
                                                 >
                                                     Editar
+                                                </Button>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button
+                                                    component={Link}
+                                                    to={`/customers/detail/${tempCustomer.id}`}
+                                                    size={'small'}
+                                                    variant='contained'
+                                                    color='default'
+                                                    style={{ width: '100px' }}
+                                                    startIcon={
+                                                        <span className='material-icons'>info</span>
+                                                    }
+                                                >
+                                                    Detalles
                                                 </Button>
                                             </TableCell>
                                         </TableRow>

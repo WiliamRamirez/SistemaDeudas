@@ -6,6 +6,8 @@ const apiCustomers = {
     add: (data: CustomerFormValues) => request.post('/customers', data),
     detail: (id: string) => request.get<Customer>(`/customers/${id}`),
     edit: (data: CustomerFormValues) => request.put(`/customers/${data.id}`, data),
+    remove: (id: string, del: boolean) => request.put(`/customers/delete/${id}`, { delete: del }),
+    delete: (id: string) => request.delete(`/customers/${id}`),
 };
 
 export default apiCustomers;

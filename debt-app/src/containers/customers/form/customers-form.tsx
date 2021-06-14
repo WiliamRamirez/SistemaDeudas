@@ -8,12 +8,14 @@ import { Button } from '@material-ui/core';
 import CustomMainForm from '../../../components/form/custom-main-form';
 import { CustomerFormValues } from '../../../models/customer';
 import apiCustomers from '../../../api/api.customers';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import CustomSnackbar from '../../../components/custom-snackbar/custom-snackbar';
 import BodyLoading from '../../../components/custom-loading/body-loading';
 import ButtonLoading from '../../../components/custom-loading/button-loading';
 
 function CustomersForm() {
+    const history = useHistory();
+
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [initialLoading, setInitialLoading] = useState(true);
@@ -33,14 +35,17 @@ function CustomersForm() {
             setLoading(true);
             apiCustomers.edit(customer).then(() => {
                 updatedLoading();
+                setMessage('Se edito correctamento el cliente');
+                history.push(`/customers/detail/${id}`);
+                setCustomer(customer);
             });
-            setMessage('Se edito correctamento el cliente');
         } else {
             setLoading(true);
             apiCustomers.add(customer).then(() => {
                 updatedLoading();
+                history.push('/customers/list');
+                setMessage('Se agrego correctamento el cliente');
             });
-            setMessage('Se agrego correctamento el cliente');
         }
     }
 
